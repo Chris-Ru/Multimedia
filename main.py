@@ -1,5 +1,6 @@
 import projects
 from flask import Flask, render_template, url_for, request, redirect, flash, render_template_string
+import numpy as np
 #from flask_sqlalchemy import SQLAlchemy
 
 #create a Flask instance
@@ -102,6 +103,53 @@ def popularitems():
 @app.route('/week/')
 def week():
   return render_template('week.html')
+
+@app.route('/calculator/', methods=['GET', 'POST'])
+def calculator():
+  if(request.method == 'POST'):
+    form = request.form
+    a = form['type']
+    b = form['num1']
+    c = form['num2']
+    if a == 1:
+      addition = np.add(b,c)
+      result = "\nAdded values: \n" + addition
+    elif a == 2:
+      subtraction = np.subtract(b,c)
+      result = "\nSubtracted values: \n" + subtraction
+    elif a == 3:
+      multiply = np.multiply(b,c)
+      result = "\nMultiplied values" + multiply
+    elif a == 4:
+      divide = np.divide(b,c)
+      result = "\nDivided values" + divide
+    elif a == 5:
+      power = np.power(b,c)
+      result = "\nPower values" + power
+    elif a == 6:
+      modulus = np.mod(b,c)
+      result = "\nModulus values" + modulus
+    # elif a == 7:
+    #   in_array = [0, np.pi / 4, 3*np.pi / 2, np.pi/6]
+    #   print ("Input array : \n", in_array)
+      
+    #   tan_Values = np.tan(in_array)
+    #   print ("\nTan values : \n", tan_Values)
+    # elif a == 8:
+    #   in_array = [0, np.pi / 4, 3*np.pi / 2, np.pi/6]
+    #   print ("Input array : \n", in_array)
+      
+    #   sin_Values = np.sin(in_array)
+    #   print ("\nSin values : \n", sin_Values)
+    # elif a == 9:
+    #   in_array = [0, np.pi / 4, 3*np.pi / 2, np.pi/6]
+    #   print ("Input array : \n", in_array)
+      
+    #   cos_Values = np.cos(in_array)
+    #   print ("\nCos values : \n", cos_Values)
+
+    return render_template('calculator.html', result = result)
+  return render_template('calculator.html')
 
 if __name__ == "__main__":
     #runs the application on the repl development server
